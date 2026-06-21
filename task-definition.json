@@ -1,0 +1,35 @@
+{
+  "family": "devops-front-ep3",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/LabRole",
+  "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/LabRole",
+  "containerDefinitions": [
+    {
+      "name": "frontend",
+      "image": "<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/devops-front-ep3:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "BACKEND_USERS_URL", "value": "http://<ALB_PUBLICO_BACKEND_USERS>:8081" },
+        { "name": "BACKEND_PRODUCTS_URL", "value": "http://<ALB_PUBLICO_BACKEND_PRODUCTS>:8082" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/devops-front-ep3",
+          "awslogs-region": "<REGION>",
+          "awslogs-stream-prefix": "frontend",
+          "awslogs-create-group": "true"
+        }
+      }
+    }
+  ]
+}
