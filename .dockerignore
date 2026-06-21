@@ -1,0 +1,13 @@
+.git
+.gitignore
+output/
+target/
+*.class
+.idea/
+.vscode/
+.settings/
+.classpath
+.project
+README.md
+Dockerfile
+.dockerignore
